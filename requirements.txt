@@ -40,10 +40,8 @@ PyQt5==5.15.10
 PyQt5-sip==12.13.0
 python-dateutil==2.8.2
 pytz==2023.3.post1
-pywin32==305.1
 pyzmq==25.1.2
 regex==2023.10.3
-scipy==1.11.4
 setuptools==68.2.2
 sip==6.7.12
 six==1.16.0
