@@ -1,15 +1,5 @@
 import pickle
 import pandas as pd
-import nltk
-
-# Ensure the necessary NLTK data packages are downloaded
-nltk.download('averaged_perceptron_tagger', quiet=True)
-nltk.download('punkt', quiet=True)
-nltk.download('wordnet', quiet=True)
-nltk.download('omw-1.4', quiet=True)
-nltk.download('stopwords', quiet=True)
-
-from nltk.tokenize import word_tokenize
 
 def load_pickle(filename):
     # Open the file in read mode
