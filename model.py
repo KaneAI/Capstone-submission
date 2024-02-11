@@ -3,6 +3,13 @@ import pandas as pd
 import re
 import nltk
 
+# Ensure the necessary NLTK data packages are downloaded
+nltk.download('averaged_perceptron_tagger', quiet=True)
+nltk.download('punkt', quiet=True)
+nltk.download('wordnet', quiet=True)
+nltk.download('omw-1.4', quiet=True)
+nltk.download('stopwords', quiet=True)
+
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
@@ -63,6 +70,7 @@ vectorizer = load_pickle('pickle//vectorizer.pkl')
 sc = load_pickle('pickle//scaler.pkl')
 model = load_pickle('pickle//sentiment_model.pkl')
 
+
 def get_recommendations(username):
     # Get the top 20 recommendations from the previously calculated recommendations
     d = user_pred.loc[username].sort_values(ascending=False)[0:20]
@@ -70,9 +78,8 @@ def get_recommendations(username):
     # Merge in the product names
     d = pd.merge(d,product_lookup,left_on='id',right_on='id', how = 'left')
 
-    # load the raw data
-    df = pd.read_csv('Data/sample30.csv')[['id','reviews_text',]]
-
+    df = load_pickle('pickle//processed_reviews.pkl')
+    
     # filter souce data for the 20 recommended products 
     # Creating a boolean series
     ids_in_d = df['id'].isin(d['id'])
@@ -82,11 +89,6 @@ def get_recommendations(username):
 
     # reset the index after the deletion
     df.reset_index(drop=True, inplace=True)
-
-    # Process the review text
-    df['review_s1'] = standardise_text_series(df.copy()['reviews_text'])
-    df['review_s2'] = lemmatize_text_series(df.copy()['review_s1'])
-    df['review_s3'] = remove_stopwords_series(df.copy()['review_s2'])
 
     # Transform the 'review_s3' column
     tfidf_matrix = vectorizer.transform(df['review_s3'])
