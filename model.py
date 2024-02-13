@@ -49,8 +49,10 @@ def get_recommendations(username):
     # merge the predictions with the df
     df['sentiment'] = preds
 
+    # filter for only the columns we need
     df = df[['id','sentiment']]
 
+    # calculate the percentage of positive sentiment reviews
     sentiment_percent_df = df.groupby('id')['sentiment'].mean().reset_index()
 
     # select the top 5 and merge in the product names
